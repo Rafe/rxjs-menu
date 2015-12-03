@@ -1,0 +1,143 @@
+//base
+$darker-green: #5a5957;
+$gray-green: #999893;
+$dark-green: #7a7862;
+$light-green: #e9e5e2;
+$medium-green: #95ca84;
+$title-green: #64805A;
+$whitesmoke: #f2f2f2;
+$highlight-color: #b8d9ac;
+
+$dark-gray: #807f7b;
+$medium-gray: #cccccc;
+$gray: #82837e;
+$light-gray: #aeb19c;
+$lighter-gray: #e0e0e0;
+
+$gutter: 10px;
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: $dark-green;
+  background-color: $lighter-gray;
+  height: 100%;
+}
+
+a {
+  color: $title-green;
+  text-decoration: none;
+  &:visited {
+    color: #4D4C49;
+    text-decoration: none;
+  }
+
+  &:hover, &:active {
+    color: #91C680;
+    text-decoration: none;
+  }
+
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.navbar {
+  background-color: rgba(255, 255, 255, 0.6);
+  z-index: 30;
+  position: relative;
+  transition: background-color 0.4s linear;
+
+  &.active {
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  .navbar-nav li > a {
+    color: $darker-green;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 0 $gutter 0;
+    margin-left: 15px;
+    margin-right: 15px;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+  .navbar-nav li {
+    position: relative;
+    padding-right: 2*$gutter;
+    span {
+      display: inline-block;
+      padding: 0.5*$gutter;
+    }
+
+    .indicator {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      border-bottom: 0;
+      transition: color 0.6s linear;
+    }
+
+    &.active .indicator {
+      border-bottom: 4px solid $medium-green;
+    }
+    &.active span {
+      color: $medium-green;
+    }
+  }
+}
+
+.nav-tray-container {
+  position: absolute;
+  width: 100%;
+  top: -1000px;
+  transition: top 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
+  padding-bottom: 3*$gutter;
+  left: 0;
+  z-index: -1;
+  padding-top: $gutter;
+  background-color: white;
+
+  &.active {
+    top: -1px;
+  }
+
+  .nav-tray {
+    display: none;
+    color: $dark-green;
+    padding-top: 55px;
+    z-index: -2;
+
+    li {
+      line-height: 28px;
+    }
+
+    &.active {
+      display: block;
+    }
+  }
+
+  ul {
+    list-style: none;
+  }
+}
+
+.nav-page-overlay {
+  transition: opacity 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  opacity: 0;
+}
+
+.nav-page-overlay.active {
+  opacity: 0.6;
+}
