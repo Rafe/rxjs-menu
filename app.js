@@ -17,10 +17,7 @@ var mouseLeaveMenuItem = fromEvent(navItems, 'mouseleave');
 var mouseEnterTray = fromEvent(navTrays, 'mouseenter');
 var mouseLeaveTray = fromEvent(navTrays, 'mouseleave');
 
-var inMenu = mouseEnterMenuItem.map(event => {
-  let $target = $(event.target);
-  return $target.is('li') ? $target : $target.parents('li');
-}).merge(mouseLeaveMenuItem.map(() => {
+var inMenu = mouseEnterMenuItem.map(getMenuItem).merge(mouseLeaveMenuItem.map(() => {
   return false;
 }));
 
@@ -30,23 +27,15 @@ var inTray = mouseEnterTray.map(() => {
   return false;
 })).startWith(false);
 
-let eventStream = Rx.Observable.combineLatest(inMenu, inTray).debounce(100).throttle(400).distinctUntilChanged();
+let eventStream = Rx.Observable.combineLatest(inMenu, inTray).debounce(200);
+// .throttle(400)
+// .distinctUntilChanged()
 
 eventStream.filter(args => {
   return args[0];
-}).do(resetItems).subscribe(args => {
-  let menuItem = args[0];
-
-  menuItem.addClass('active');
-
-  let trayId = menuItem.data('link');
-  let tray = $(trayId);
-
-  trayContainer.addClass('active');
-
-  $(tray).addClass('active');
-  addOverlay();
-});
+}).map(args => {
+  return args[0];
+}).subscribe(openTray);
 
 eventStream.filter(args => {
   return !args[0] && !args[1];
@@ -74,12 +63,31 @@ function resetItems() {
   navTrays.removeClass('active');
 }
 
+function openTray(menuItem) {
+  resetItems();
+
+  menuItem.addClass('active');
+
+  let trayId = menuItem.data('link');
+  let tray = $(trayId);
+
+  trayContainer.addClass('active');
+
+  $(tray).addClass('active');
+  addOverlay();
+}
+
 function closeTray() {
   navItems.removeClass('active');
   trayContainer.removeClass('active');
   menuContainer.removeClass('active');
 }
-}).call(this,require("IrXUsu"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_315bf27a.js","/")
+
+function getMenuItem(event) {
+  let $target = $(event.target);
+  return $target.is('li') ? $target : $target.parents('li');
+}
+}).call(this,require("IrXUsu"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_aa4460db.js","/")
 },{"IrXUsu":5,"buffer":2,"jquery":6,"rx":7}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*!
